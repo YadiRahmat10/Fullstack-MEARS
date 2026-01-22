@@ -1,14 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  templateUrl: './app.component.html'
 })
-export class AppComponent {
-  api = 'http://localhost:3000';
+export class AppComponent implements OnInit {
 
+  api = 'http://localhost:3000';
   pegawai: any[] = [];
 
   form: any = {
@@ -18,38 +17,37 @@ export class AppComponent {
     nama: '',
     hakakses: '',
     kdklinik: '',
-    kdcabang: '',
+    kdcabang: ''
   };
 
   isEdit = false;
 
   constructor(private http: HttpClient) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getPegawai();
   }
 
   getPegawai() {
-    this.http
-      .get<any[]>(`${this.api}/pegawai`)
-      .subscribe((res) => (this.pegawai = res));
+    this.http.get<any[]>(`${this.api}/pegawai`)
+      .subscribe(res => this.pegawai = res);
   }
 
   save() {
     if (this.isEdit) {
-      this.http
-        .put(`${this.api}/users/${this.form.kduser}`, this.form)
+      this.http.put(`${this.api}/users/${this.form.kduser}`, this.form)
         .subscribe(() => {
           alert('Berhasil update');
           this.resetForm();
           this.getPegawai();
         });
     } else {
-      this.http.post(`${this.api}/users`, this.form).subscribe(() => {
-        alert('Berhasil simpan');
-        this.resetForm();
-        this.getPegawai();
-      });
+      this.http.post(`${this.api}/users`, this.form)
+        .subscribe(() => {
+          alert('Berhasil simpan');
+          this.resetForm();
+          this.getPegawai();
+        });
     }
   }
 
@@ -60,10 +58,11 @@ export class AppComponent {
 
   hapus(kduser: string) {
     if (confirm('Yakin hapus data?')) {
-      this.http.delete(`${this.api}/users/${kduser}`).subscribe(() => {
-        alert('Berhasil hapus');
-        this.getPegawai();
-      });
+      this.http.delete(`${this.api}/users/${kduser}`)
+        .subscribe(() => {
+          alert('Berhasil hapus');
+          this.getPegawai();
+        });
     }
   }
 
@@ -75,7 +74,7 @@ export class AppComponent {
       nama: '',
       hakakses: '',
       kdklinik: '',
-      kdcabang: '',
+      kdcabang: ''
     };
     this.isEdit = false;
   }
