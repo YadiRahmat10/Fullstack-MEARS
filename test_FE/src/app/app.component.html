@@ -1,0 +1,113 @@
+<style>
+  form {
+    max-width: 400px;
+    margin-bottom: 20px;
+  }
+
+  input,
+  select,
+  button {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  th,
+  td {
+    border: 1px solid #ccc;
+    padding: 8px;
+  }
+
+  th {
+    background: #f0f0f0;
+  }
+</style>
+
+<div>
+  <h2>CRUD Application Angular</h2>
+
+  <form (ngSubmit)="save()">
+    <input
+      type="text"
+      [(ngModel)]="form.kduser"
+      name="kduser"
+      placeholder="Kode User"
+      required
+    />
+    <input
+      type="text"
+      [(ngModel)]="form.username"
+      name="username"
+      placeholder="Username"
+      required
+    />
+    <input
+      type="password"
+      [(ngModel)]="form.password"
+      name="password"
+      placeholder="Password"
+      required
+    />
+    <input
+      type="text"
+      [(ngModel)]="form.nama"
+      name="nama"
+      placeholder="Nama"
+      required
+    />
+
+    <select [(ngModel)]="form.hakakses" name="hakakses" required>
+      <option value="">Pilih Hak Akses</option>
+      <option value="admin">Admin</option>
+      <option value="user">User</option>
+    </select>
+
+    <input
+      type="text"
+      [(ngModel)]="form.kdklinik"
+      name="kdklinik"
+      placeholder="Kode Klinik"
+    />
+    <input
+      type="text"
+      [(ngModel)]="form.kdcabang"
+      name="kdcabang"
+      placeholder="Kode Cabang"
+    />
+
+    <button type="submit">
+      {{ isEdit ? "Update" : "Simpan" }}
+    </button>
+
+    <button type="button" (click)="resetForm()" *ngIf="isEdit">Batal</button>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Kode user</th>
+        <th>Username</th>
+        <th>Nama</th>
+        <th>Hak Akses</th>
+        <th>Aksi</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of pegawai">
+        <td>{{ p.kduser }}</td>
+        <td>{{ p.username }}</td>
+        <td>{{ p.nama }}</td>
+        <td>{{ p.hakakses }}</td>
+        <td>
+          <button (click)="edit(p)">Edit</button>
+          <button (click)="hapus(p.kduser)">Hapus</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
